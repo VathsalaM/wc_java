@@ -1,0 +1,5 @@
+reading file
+
+	character count
+	line count
+	word count
