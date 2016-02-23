@@ -10,6 +10,10 @@ import java.io.IOException;
 class Library {
 	private	ArrayList<String> files = new ArrayList<String>(); 
 	private	ArrayList<String> commands = new ArrayList<String>(); 
+	private	ArrayList<Integer> lineCount = new ArrayList<Integer>(); 
+	private	ArrayList<Integer> charCount = new ArrayList<Integer>(); 
+	private	ArrayList<Integer> wordCount = new ArrayList<Integer>(); 
+
 
 	public void argumentSeperator(String[] args){
 		for (int i=0;i<args.length ;i++ ) {
@@ -28,6 +32,7 @@ class Library {
 		for(int i=0;i<this.files.size();i++){
 			int count = countLines(this.files.get(i));
 			lineCounts.add(count);
+			lineCount.add(count);
 		}
 		return lineCounts;
 	}
@@ -54,6 +59,7 @@ class Library {
 		for(int i=0;i<this.files.size();i++){
 			int count = countChars(this.files.get(i));
 			lineCounts.add(count);
+			charCount.add(count);
 		}
 		return lineCounts;
 	}
@@ -78,6 +84,7 @@ class Library {
 		for(int i=0;i<this.files.size();i++){
 			int count = wordCount(this.files.get(i));
 			lineCounts.add(count);
+			wordCount.add(count);
 		}
 		return lineCounts;
 	}
@@ -88,10 +95,22 @@ class Library {
 		FileReader a = readFile(file);
 		BufferedReader x = new BufferedReader(a);
 		while( (line = x.readLine()) != null ) {
+			line = line.replaceAll("\t"," ");
+			line = line.replaceAll("\n","");
+			line = line.trim().replaceAll(" +", " ");
 			String[] str = line.split(" ");
-			count+=str.length;
+			count+=(line.length()==0)?0:str.length;
         }
-		return count-1;
+		return count;
 	}
 
+	public void represent(){
+		int l_c=0,w_c=0,c_c=0;
+		for (int i=0;i<files.size() ;i++) {
+			l_c+=lineCount.get(i);w_c+=wordCount.get(i);c_c+=charCount.get(i);
+			System.out.println("\t"+lineCount.get(i)+"\t"+wordCount.get(i)+"\t"+charCount.get(i)+" "+files.get(i));
+		}
+		if(files.size()>1)
+			System.out.println("\t"+l_c+"\t"+w_c+"\t"+c_c+" Total");
+	}
 }
