@@ -32,22 +32,66 @@ class Library {
 		return lineCounts;
 	}
 
-	public BufferedReader readFile(String file)throws FileNotFoundException, IOException{
+	public FileReader readFile(String file)throws FileNotFoundException, IOException{
 		File fileName = new File(file);
 		FileReader a = new FileReader(fileName);
-		BufferedReader x = new BufferedReader(a);
-		return x;
+		return a;
 	}
 
 	public int countLines(String file)throws FileNotFoundException, IOException{
 		int count = 0;
-		String file_text = "";
 		String line = "";
-		BufferedReader x = readFile(file);
+		FileReader a = readFile(file);
+		BufferedReader x = new BufferedReader(a);
 		while( (line = x.readLine()) != null ) {
-			file_text+=line;
 			count++;
         }
 		return count-1;
 	}
+
+	public ArrayList<Integer> charCounter()throws FileNotFoundException, IOException{
+		ArrayList<Integer> lineCounts = new ArrayList<Integer>(); 
+		for(int i=0;i<this.files.size();i++){
+			int count = countChars(this.files.get(i));
+			lineCounts.add(count);
+		}
+		return lineCounts;
+	}
+
+	public int countChars(String file)throws FileNotFoundException,IOException{
+		FileReader a = readFile(file);
+		int i = 0;
+		int x = 0;
+		int buff_offset = 0;
+		int length = 100;
+		char[] cbuf = new char[400];
+		do{
+			i = a.read(cbuf,buff_offset,length);
+			x+=i;
+
+		}while(i>=0);
+		return x+1;
+	}
+
+	public ArrayList<Integer> wordCounter()throws FileNotFoundException, IOException{
+		ArrayList<Integer> lineCounts = new ArrayList<Integer>(); 
+		for(int i=0;i<this.files.size();i++){
+			int count = wordCount(this.files.get(i));
+			lineCounts.add(count);
+		}
+		return lineCounts;
+	}
+
+	public int wordCount(String file)throws FileNotFoundException, IOException{
+		int count = 0;
+		String line = "";
+		FileReader a = readFile(file);
+		BufferedReader x = new BufferedReader(a);
+		while( (line = x.readLine()) != null ) {
+			String[] str = line.split(" ");
+			count+=str.length;
+        }
+		return count-1;
+	}
+
 }
