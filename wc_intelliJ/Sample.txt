@@ -1,5 +1,0 @@
-The Java Tutorials are continuously updated to keep up with changes to the Java Platform and to incorporate feedback from our readers.
-
-This release of the tutorial corresponds to the JDK 8u40 release.
-
-This release includes a new lesson in the Deployment trail that describes how to use the Java packaging tools to generate self-contained applications. Self-contained applications are Java applications that are bundled with the JRE that is needed to run. These applications are installed on a user's local drive and launched in the same way as native applications. See Deploying Self-Contained Applications for more information.
